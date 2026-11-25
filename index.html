@@ -247,6 +247,8 @@ h3{font:700 20px/1.2 Onest,sans-serif;margin:0}
 .hv{padding-top:10px}
 .hv .seg{display:grid;width:100%}
 .seg.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.seg.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+.seg.four button{padding:0 6px}
 .subj{margin-bottom:10px}
 .hv-nav{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:8px;margin:14px 0 12px}
 .hv-nav h3{text-align:center;font-size:18px;text-wrap:balance}
@@ -329,10 +331,11 @@ h3{font:700 20px/1.2 Onest,sans-serif;margin:0}
       <section id="hist" class="hist"></section>
       <section class="sets">
         <h3>Звук</h3>
-        <div class="seg" id="seg" role="radiogroup" aria-label="Сила на сигнала">
+        <div class="seg four" id="seg" role="radiogroup" aria-label="Сила на сигнала">
           <button type="button" role="radio" data-s="off">Изкл.</button>
           <button type="button" role="radio" data-s="quiet">Тих</button>
           <button type="button" role="radio" data-s="mid">Среден</button>
+          <button type="button" role="radio" data-s="loud">Силен</button>
         </div>
         <button type="button" id="test" class="ghost">Пробвай</button>
       </section>
@@ -2432,7 +2435,7 @@ function beep(f, d) {
   if (!AC || state.sound === 'off') return;
   try {
     const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
-    const peak = state.sound === 'mid' ? 0.12 : 0.035;
+    const peak = { quiet: 0.035, mid: 0.12, loud: 0.6 }[state.sound] || 0.035;
     o.type = 'sine';
     o.frequency.setValueAtTime(f, t);
     g.gain.setValueAtTime(0.0001, t);
