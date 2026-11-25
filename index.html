@@ -2423,8 +2423,9 @@ function frame(now) {
 }
 requestAnimationFrame(frame);
 
-/* ---------- sound (soft by default) ---------- */
-let AC = null;
+/* ---------- sound ---------- */
+let AC = null, CLIP = null;
+const LEVEL = { quiet: 0.12, mid: 0.6, loud: 1 };
 function audioOn() {
   try {
     if (!AC) { const A = window.AudioContext || window.webkitAudioContext; if (A) AC = new A(); }
@@ -2435,14 +2436,28 @@ function beep(f, d) {
   if (!AC || state.sound === 'off') return;
   try {
     const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
-    const peak = { quiet: 0.035, mid: 0.12, loud: 0.6 }[state.sound] || 0.035;
+    const peak = LEVEL[state.sound] || LEVEL.quiet, loud = state.sound === 'loud';
     o.type = 'sine';
     o.frequency.setValueAtTime(f, t);
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(peak, t + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-    o.connect(g); g.connect(AC.destination);
-    o.start(t); o.stop(t + d + 0.05);
+    if (loud) {
+      /* the loudest level holds the full volume for most of the beep instead of fading right away */
+      g.gain.exponentialRampToValueAtTime(peak, t + 0.01);
+      g.gain.setValueAtTime(peak, t + d * 0.7);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.04);
+    } else {
+      g.gain.exponentialRampToValueAtTime(peak, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    }
+    o.connect(g);
+    if (loud) {
+      /* ...and drives the tone into a soft clip: a fuller, squarer beep that carries further from a phone speaker */
+      if (!CLIP) { CLIP = new Float32Array(1024); for (let i = 0; i < 1024; i++) CLIP[i] = Math.tanh(3 * (i / 511.5 - 1)) / Math.tanh(3); }
+      const ws = AC.createWaveShaper(), out = AC.createGain();
+      ws.curve = CLIP; ws.oversample = '4x'; out.gain.value = 0.9;
+      g.connect(ws); ws.connect(out); out.connect(AC.destination);
+    } else g.connect(AC.destination);
+    o.start(t); o.stop(t + d + (loud ? 0.09 : 0.05));
   } catch (e) { /* audio refused */ }
 }
 const tick3 = () => beep(660, 0.12);
