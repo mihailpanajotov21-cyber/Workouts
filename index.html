@@ -7,8 +7,8 @@
 <meta name="theme-color" content="#131312" media="(prefers-color-scheme: dark)">
 <title>Тренировки</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="flame-192.png">
+<link rel="apple-touch-icon" href="flame-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Тренировки">
 <meta name="mobile-web-app-capable" content="yes">
@@ -788,6 +788,9 @@ h3{font:700 20px/1.2 Onest,sans-serif;margin:0}
     lateralRaise: { view: 'front', db: 'end', keys: [
       { p: O(FRONT, { a1: { a: [100, 94] }, a2: { a: [80, 86] } }), hold: 0.3, dur: 1.0 },
       { p: O(FRONT, { a1: { a: [184, 178] }, a2: { a: [-4, 2] } }), hold: 0.35, dur: 1.4 }] },
+    armRaise: { view: 'front', keys: [
+      { p: O(FRONT, { a1: { a: [100, 94] }, a2: { a: [80, 86] } }), hold: 0.3, dur: 1.0 },
+      { p: O(FRONT, { a1: { a: [184, 178] }, a2: { a: [-4, 2] } }), hold: 0.6, dur: 1.4 }] },
     rowUnder: { view: 'side', db: 'end', keys: [
       { p: O(BENT), hold: 0.25, dur: 0.9 },
       { p: O(BENT, { a1: { r: [-17, 27], b: 1 }, a2: { r: [-21, 27], b: 1 } }), hold: 0.35, dur: 1.2 }] },
@@ -867,6 +870,9 @@ h3{font:700 20px/1.2 Onest,sans-serif;margin:0}
     wallPlank: { view: 'side', props: { wallF: 222 }, thumb: 0, keys: [
       { p: O(LEAN2(33, 90), { a1: { t: [218, 58], b: 1 }, a2: { t: [218, 63], b: 1 } }), hold: 0.2, dur: 1.8 },
       { p: O(LEAN2(33.4, 90), { head: -59, a1: { t: [218, 58], b: 1 }, a2: { t: [218, 63], b: 1 } }), hold: 0.2, dur: 1.8 }] },
+    wallAngel: { view: 'front', keys: [
+      { p: O(FRONT, { a1: { a: [172, 268] }, a2: { a: [8, -88] } }), hold: 0.3, dur: 1.5 },
+      { p: O(FRONT, { a1: { a: [236, 242] }, a2: { a: [-56, -62] } }), hold: 0.3, dur: 1.5 }] },
     bridge: { view: 'side', props: { mat: [40, 300] }, keys: [
       { p: O(LIE, { l1: { t: [236, AH], b: -1, f: 0 }, l2: { t: [242, AH], b: -1, f: 0 } }), hold: 0.3, dur: 1.1 },
       { p: O(LIE, { hip: [170, LY - 30], torso: 151, l1: { t: [236, AH], b: -1, f: 0 }, l2: { t: [242, AH], b: -1, f: 0 } }), hold: 0.5, dur: 1.3 }] },
@@ -1062,6 +1068,8 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
   const DB0 = { hip: [178, LY], torso: 180, head: 189, a1: DBA, a2: DBA, l1: DBT, l2: DBT };
   const MST = O(STAND, { a1: { a: [90, 84], ab: [8, 5] }, a2: { a: [90, 84], ab: [8, 5] }, l1: pl(160, AH, 0, 12), l2: pl(160, AH, 0, 12) });
   const KNEE = { t: [176, 193, 12], b: -1, f: 16 }, SWF = { a: [62, 18], ab: [8, 4] }, SWB = { a: [110, 96], ab: [8, 6] };
+  /* wall angel: back on the wall, arms slide from a goal post up to a Y */
+  const GOALP = { t: [116, 47, 58], b: 1, pole: [0, 1, 0.5] }, ANGY = { t: [116, 14, 55], b: 1, pole: [0, 0.4, 1] };
 
   const EX = {
     floorPress: { cam: { az: 34, el: 26 }, db: 'across', props: { mat: [62, 272] }, keys: [
@@ -1085,6 +1093,9 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     lateralRaise: { cam: { az: 68, el: 10 }, db: 'x', keys: [
       { p: both(O(STAND), { a: [90, 90], ab: [10, 8] }), hold: 0.3, dur: 1.0 },
       { p: both(O(STAND), { a: [90, 90], ab: [86, 80] }), hold: 0.35, dur: 1.4 }] },
+    armRaise: { cam: { az: 68, el: 10 }, keys: [
+      { p: both(O(STAND), { a: [90, 90], ab: [10, 8] }), hold: 0.3, dur: 1.0 },
+      { p: both(O(STAND), { a: [90, 90], ab: [86, 82] }), hold: 0.6, dur: 1.4 }] },
     rowUnder: { cam: { az: 38, el: 14 }, db: 'across', keys: [
       { p: both(O(BENT), rowA([2, 74, 4], [-0.5, -0.6, 1])), hold: 0.25, dur: 0.9 },
       { p: both(O(BENT), rowA([-16, 28, 16], [-0.5, -0.6, 1])), hold: 0.35, dur: 1.2 }] },
@@ -1164,6 +1175,9 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     wallPlank: { cam: { az: -32, el: 12 }, props: { wallF: WALLF }, thumb: 0, keys: [
       { p: O(LEAN(33, 104), { a1: WFORE, a2: WFORE }), hold: 0.2, dur: 1.8 },
       { p: O(LEAN(33.4, 104), { a1: WFORE, a2: WFORE, head: -59 }), hold: 0.2, dur: 1.8 }] },
+    wallAngel: { cam: { az: 62, el: 10 }, props: { wall: 111 }, keys: [
+      { p: O(WALL, { a1: GOALP, a2: GOALP }), hold: 0.3, dur: 1.5 },
+      { p: O(WALL, { a1: ANGY, a2: ANGY }), hold: 0.3, dur: 1.5 }] },
     bridge: { cam: { az: 28, el: 20 }, props: { mat: [40, 300] }, keys: [
       { p: O(LIE, { hip: [178, LY], torso: 180, head: 189, l1: BRL, l2: BRL }), hold: 0.3, dur: 1.1 },
       { p: O(LIE, { hip: [169, LY - 30], torso: 146, head: 189, l1: BRL, l2: BRL }), hold: 0.5, dur: 1.3 }] },
@@ -1200,6 +1214,7 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     wallPush: { hands: [{ m: 'flat', n: [-1, 0, 0], f: [0, -1, 0.25] }, { m: 'flat', n: [-1, 0, 0], f: [0, -1, 0.25] }] },
     wallPlank: { hands: [{ m: 'flat', n: [-1, 0, 0], f: [0, -1, 0.05] }, { m: 'flat', n: [-1, 0, 0], f: [0, -1, 0.05] }] },
     bridge: { hands: [FLAT_FLOOR, FLAT_FLOOR] },
+    wallAngel: { hands: [{ m: 'flat', n: [-1, 0, 0], f: [0, -1, 0.2] }, { m: 'flat', n: [-1, 0, 0], f: [0, -1, 0.2] }] },
   };
   Object.keys(META).forEach(k => Object.assign(EX[k], META[k]));
   const dbOn = (ex, i) => !!dbMode(ex, i);
@@ -1354,7 +1369,7 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     /* profiles run toward +y so both mirrored halves face outward */
     const half = (s, pts) => (s > 0 ? pts : pts.map(([r, y]) => [r, -y]).reverse());
     const both2 = (prof, n, ph) => [lathP(prof(1), n, ph), lathP(prof(-1), n, ph)];
-    [[5, 6.4, 5.8, 2.9], [2, 4.9, 4.6, 2.4]].forEach(([kg, rp, hp, rc]) => {
+    [[5, 6.4, 5.8, 2.9], [2, 4.9, 4.6, 2.4], [1, 3.9, 3.6, 2.0]].forEach(([kg, rp, hp, rc]) => {
       const y0 = 7.1, y1 = y0 + hp, ch = 0.6;
       const collar = s => half(s, [[1.45, 6.05], [2.25, 6.05], [2.55, 6.3], [2.55, 6.85], [2.3, 7.12], [1.45, 7.12]]);
       const head = s => half(s, [[1.4, y0], [rp - ch, y0], [rp, y0 + ch], [rp, y1 - ch], [rp - ch, y1], [rc - 0.05, y1]]);
@@ -1426,7 +1441,7 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
       t.encoding = T.sRGBEncoding; t.anisotropy = 4;
       return new T.MeshStandardMaterial({ map: t, metalness: 0.7, roughness: 0.3 });
     };
-    MATS.cap = { 5: capMat(5), 2: capMat(2) };
+    MATS.cap = { 5: capMat(5), 2: capMat(2), 1: capMat(1) };
     return MATS;
   }
   function envScene() {
@@ -1636,6 +1651,8 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     return { E, W: A.clone().addScaledVector(u, d) };
   }
 
+  /* the dumbbell model for a weight: 1, 2 or 5 kg */
+  const dbSize = kg => (!kg ? 5 : kg <= 1.5 ? 1 : kg <= 3 ? 2 : 5);
   /* one dumbbell: a group of chrome, rubber, knurled grip and two labelled end caps; set(kg) swaps the size */
   function makeDumbbell(Gm, Mt) {
     const T = G.THREE, g = new T.Group(), parts = {};
@@ -1669,7 +1686,7 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     const UPW = V3(0, 1, 0), LAT = V3(0, 0, 1);
 
     function update(k, ex, kg) {
-      const size = kg && kg <= 3 ? 2 : 5;
+      const size = dbSize(kg);
       db.forEach(d => d.set(size));
       const spine = wd(k.spine);
       const Qp = qmul(basisQ(spine, wd(k.pFront)), R.torso0i), Qc = qmul(basisQ(spine, wd(k.front)), R.torso0i);
@@ -1816,7 +1833,7 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     };
     let kgNow = 5;
     function update(k, ex, kg) {
-      const size = kg && kg <= 3 ? 2 : 5;
+      const size = dbSize(kg);
       if (size !== kgNow) { kgNow = size; dbParts.forEach(d => d.set(size)); }
       frame(P.tU, k.H, k.spine, k.front);
       frame(P.tL, k.H, k.spine, k.pFront);
@@ -2038,13 +2055,14 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
   }
   const THUMBS = {};
   let TV = null;
-  function thumb(id, gender) {
-    const g = gender || 'm', key = id + ':' + g;
+  function thumb(id, gender, kg) {
+    const g = gender || 'm', key = id + ':' + g + ':' + dbSize(kg);
     if (THUMBS[key]) return THUMBS[key];
     const ex = EX[id];
     if (!ex) return '';
     if (!TV) { TV = createView({ keep: true, ratio: 1, shadow: 1024, gender: g }); TV.size(200, 152); }
     TV.setGender(g);
+    TV.kg = kg || 5;
     TV.ex = null;
     TV.setEx(ex, keyTime(ex, ex.thumb ?? 1));
     TV.draw(0);
@@ -2100,6 +2118,8 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     calfChair: { name: 'Supported Calf Raises', bg: 'Прасци с опора на стол', tip: 'Хвани облегалката на стол за баланс. Повдигни се бавно на пръсти, задръж за миг и спусни петите.' },
     wallPush: { name: 'Wall Push-Ups', bg: 'Лицеви опори на стена', tip: 'Застани на голяма крачка от стената, дланите на нивото на раменете. Тялото е права линия: свий лактите, докато гърдите се приближат до стената, и избутай.' },
     wallPlank: { name: 'Wall Plank', bg: 'Планк на стена', tip: 'Опри предмишниците в стената на нивото на раменете и отстъпи назад, докато тялото стане права наклонена линия. Стегни корема и дишай спокойно.' },
+    armRaise: { name: 'Arm Raises', bg: 'Странично повдигане без тежест', tip: 'Без дъмбели. Вдигни ръцете встрани до нивото на раменете, задръж за секунда и ги спусни бавно.' },
+    wallAngel: { name: 'Wall Angels', bg: 'Ангел на стената', tip: 'Застани с гръб, тил и ръце до стената, стъпалата на педя пред нея. Плъзгай ръцете нагоре и надолу по стената. Ако не стигаш, качвай ги само докъдето можеш.' },
     bridge: { name: 'Glute Bridge', bg: 'Глутеус мост', tip: 'По гръб със свити колене, стъпалата на пода. Стегни седалището и повдигни таза, докато тялото стане права линия от раменете до коленете. Спускай бавно.' },
     deadBug: { name: 'Dead Bug', bg: 'Мъртва буболечка', tip: 'По гръб, ръцете към тавана, коленете свити под прав ъгъл. Бавно изпъни едната ръка назад и отсрещния крак напред, без кръстът да се отлепя от пода. Смени страната.' },
   };
@@ -2161,10 +2181,10 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
   const SUNDAY = { type: 'rest', title: 'Пълна почивка', sub: 'Неделя е за пълна почивка' };
   const gentleWeek = (a, b) => ({ 1: a, 2: REST, 3: b, 4: REST, 5: a, 6: REST, 0: SUNDAY });
   /* advice for the gentle programs: when to train, safety, and the habits around it */
-  const WHEN = 'Поне 2 часа след хранене и най-късно 1 час преди лягане.';
+  const WHEN = 'Поне 2 часа след хранене (3 часа след обилно) и най-късно 1 час преди лягане.';
   const TIPS = place => [
     ['Кога', WHEN],
-    ['Преди да започнеш', 'Ако имаш високо кръвно, проблеми със сърцето или болки в ставите, първо питай личния лекар.'],
+    ['Преди да започнеш', 'Ако имаш високо кръвно, диабет, проблеми със сърцето или болки в ставите, първо питай личния лекар.'],
     ['Спри веднага', 'При болка или стягане в гърдите, световъртеж, силен задух или неравен пулс спри и потърси лекар.'],
     ['Дишане', 'Не задържай дъха. Издишвай при усилието, вдишвай при връщането.'],
     ['Темпо', 'Движи се бавно и с контрол. Трябва да можеш да говориш, докато тренираш.'],
@@ -2184,35 +2204,36 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
         { ex: 'calfChair', sets: 2, reps: 15, load: 'без тежест' }] },
       { name: 'Гърди и гръб', items: [
         { ex: 'wallPush', sets: 2, reps: 10 },
-        { ex: 'rowSingle', sets: 2, reps: 12, kg: 5, side: 'ръка' }] },
+        { ex: 'rowSingle', sets: 2, reps: 12, kg: 1, side: 'ръка' }] },
       { name: 'Корем', items: [{ ex: 'deadBug', sets: 2, reps: 6, side: 'страна' }] }] },
     { type: 'fullB', title: 'Цяло тяло Б', sub: 'Леко, за цялото тяло', mins: 25, blocks: [WARM,
       { name: 'Крака', items: [
         { ex: 'chairStand', sets: 2, reps: 12, load: 'без тежест' },
         { ex: 'sideLegRaise', sets: 2, reps: 12, side: 'крак', load: 'без тежест' }] },
       { name: 'Горна част', items: [
-        { ex: 'floorPress', sets: 2, reps: 12, kg: 5 },
-        { ex: 'lateralRaise', sets: 2, reps: 12, kg: 2 },
-        { ex: 'wallCurl', sets: 2, reps: 12, kg: 2 }] },
+        { ex: 'floorPress', sets: 2, reps: 12, kg: 1 },
+        { ex: 'lateralRaise', sets: 2, reps: 12, kg: 1 },
+        { ex: 'wallCurl', sets: 2, reps: 12, kg: 1 }] },
       { name: 'Корем', items: [{ ex: 'wallPlank', sets: 2, time: 30, timeLabel: '20–30 сек' }] }] });
 
+  /* tatko: no dumbbells and no floor work, only the body's own weight, a chair and a wall */
   const TATKO = gentleWeek(
-    { type: 'fullA', title: 'Цяло тяло А', sub: 'Щадящо, без упражнения на пода', mins: 25, blocks: [WARM,
+    { type: 'fullA', title: 'Цяло тяло А', sub: 'Щадящо, без тежести и без пода', mins: 25, blocks: [WARM,
       { name: 'Крака', items: [
         { ex: 'chairStand', sets: 2, reps: 10, load: 'без тежест' },
         { ex: 'calfChair', sets: 2, reps: 12, load: 'без тежест' }] },
       { name: 'Гърди и гръб', items: [
         { ex: 'wallPush', sets: 2, reps: 10 },
-        { ex: 'rowSingle', sets: 2, reps: 10, kg: 5, side: 'ръка' }] },
+        { ex: 'wallAngel', sets: 2, reps: 10 }] },
       { name: 'Корем', items: [{ ex: 'wallPlank', sets: 2, time: 20, timeLabel: '15–20 сек' }] }] },
-    { type: 'fullB', title: 'Цяло тяло Б', sub: 'Щадящо, без упражнения на пода', mins: 25, blocks: [WARM,
+    { type: 'fullB', title: 'Цяло тяло Б', sub: 'Щадящо, без тежести и без пода', mins: 25, blocks: [WARM,
       { name: 'Крака', items: [
         { ex: 'chairStand', sets: 2, reps: 10, load: 'без тежест' },
         { ex: 'sideLegRaise', sets: 2, reps: 10, side: 'крак', load: 'без тежест', note: 'Хвани се за облегалката на стол или за стената, за да пазиш баланс.' }] },
-      { name: 'Рамене и ръце', items: [
-        { ex: 'seatedPress', sets: 2, reps: 10, kg: 2 },
-        { ex: 'wallCurl', sets: 2, reps: 12, kg: 5 },
-        { ex: 'lateralRaise', sets: 2, reps: 10, kg: 2 }] },
+      { name: 'Горна част', items: [
+        { ex: 'armRaise', sets: 2, reps: 12, load: 'без тежест' },
+        { ex: 'wallPush', sets: 2, reps: 10 },
+        { ex: 'wallAngel', sets: 2, reps: 10 }] },
       { name: 'Корем', items: [{ ex: 'wallPlank', sets: 2, time: 20, timeLabel: '15–20 сек' }] }] });
 
   G.PLAN = {
@@ -2222,7 +2243,7 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
       { id: 'mihail', name: 'Михаил', desc: 'Push · Pull · Крака, 5 дни седмично', fig: 'm', rest: 45, week: MIHAIL },
       { id: 'mama', name: 'Мама', desc: 'Цяло тяло, 3 дни седмично · щадящо', fig: 'f', rest: 75, week: MAMA, when: WHEN,
         tips: TIPS('Стабилен стол без колелца, опрян в стената, и постелка за упражненията на пода. Тренирай със спортни обувки.') },
-      { id: 'tatko', name: 'Татко', desc: 'Цяло тяло, 3 дни седмично · без пода', fig: 'm', rest: 90, week: TATKO, when: WHEN,
+      { id: 'tatko', name: 'Татко', desc: 'Цяло тяло, 3 дни седмично · без тежести', fig: 'm', rest: 90, week: TATKO, when: WHEN,
         tips: TIPS('Стабилен стол без колелца, опрян в стената. Тренирай със спортни обувки.') },
     ],
     DAYS: ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'],
@@ -2386,8 +2407,8 @@ function stillAt(id) {
   if (F3) { const e = F3.EX[id]; return F3.keyTime(e, e.thumb ?? 1); }
   return keyTime(EX[id], EX[id].thumb ?? 1);
 }
-function thumbHTML(id, c) {
-  if (F3) { try { return '<span class="th field ' + c + '"><img alt="" src="' + F3.thumb(id, curFig()) + '"></span>'; } catch (e) { F3 = null; mark3d(); } }
+function thumbHTML(id, c, kg) {
+  if (F3) { try { return '<span class="th field ' + c + '"><img alt="" src="' + F3.thumb(id, curFig(), kg) + '"></span>'; } catch (e) { F3 = null; mark3d(); } }
   return '<span class="th tile ' + c + '">' + markup(EX[id], null, 'fg', true) + '</span>';
 }
 const capOf = id => (F3 ? '' : EX[id].cap || '');
@@ -2521,7 +2542,7 @@ function paint(left) {
 }
 
 /* ---------- home ---------- */
-let heroTimer = null, heroList = [], heroIdx = 0;
+let heroTimer = null, heroList = [], heroIdx = 0, heroKg = {};
 function renderWeek() {
   const p = prof(), done = doneThisWeek(p), td = today();
   $('#week').innerHTML = ORDER.map(d => {
@@ -2531,8 +2552,9 @@ function renderWeek() {
   }).join('');
 }
 function heroShow() {
-  const id = heroList[heroIdx];
-  live('hero', $('#hFig'), id, RM ? { still: stillAt(id), padEl: $('.hero-txt') } : { padEl: $('.hero-txt') });
+  const id = heroList[heroIdx], o = { padEl: $('.hero-txt'), kg: heroKg[id] };
+  if (RM) o.still = stillAt(id);
+  live('hero', $('#hFig'), id, o);
   $('#hCap').textContent = id === 'relax' ? '' : INFO[id].name;
   $('#hCap').hidden = id === 'relax';
 }
@@ -2544,6 +2566,8 @@ function renderHero() {
   $('#hSub').textContent = day.sub + (day.mins ? ' · ' + day.mins + ' мин' : '');
   clearInterval(heroTimer);
   heroList = day.type === 'rest' ? ['relax'] : uniqueEx(day);
+  heroKg = {};
+  if (day.blocks) day.blocks.forEach(b => b.items.forEach(it => { if (!(it.ex in heroKg)) heroKg[it.ex] = it.kg; }));
   heroIdx = 0;
   heroShow();
   if (heroList.length > 1 && !RM) heroTimer = setInterval(() => { heroIdx = (heroIdx + 1) % heroList.length; heroShow(); }, 4800);
@@ -2567,7 +2591,7 @@ function renderPlan() {
     b.items.forEach((it, ii) => {
       const inf = INFO[it.ex], key = bi + '-' + ii, open = state.open === key;
       h += '<div class="it' + (open ? ' open' : '') + '"><button type="button" class="row" data-k="' + key + '" aria-expanded="' + open + '">' +
-        thumbHTML(it.ex, t.c) +
+        thumbHTML(it.ex, t.c, it.kg) +
         '<span class="nm"><b>' + esc(inf.name) + '</b><small>' + esc(inf.bg) + '</small></span>' +
         '<span class="ds"><b>' + esc(listDose(it, b)) + '</b><small>' + esc(loadText(it)) + '</small></span></button>' +
         (open ? '<div class="exp"><div class="exp-fig field ' + t.c + '"><div class="fb" id="xFig"></div>' + (capOf(it.ex) ? '<span class="cap">' + esc(capOf(it.ex)) + '</span>' : '') + '</div><p>' + esc(it.note || inf.tip) + '</p></div>' : '') + '</div>';
