@@ -126,7 +126,13 @@ h3{font:700 20px/1.2 Onest,sans-serif;margin:0}
 .cap{position:absolute;left:12px;top:10px;font-size:13px;font-weight:700;opacity:.92}
 .restnote{background:var(--card);border-radius:18px;padding:14px 16px}
 .restnote p{margin:0 0 10px}
-.hist,.sets{margin-top:26px;border-top:1px solid var(--rule);padding-top:16px}
+.hist,.sets,.tips{margin-top:26px;border-top:1px solid var(--rule);padding-top:16px}
+.when{display:flex;gap:9px;align-items:flex-start;background:var(--card);border-radius:14px;padding:11px 13px;margin:0 0 16px;font-size:15px;line-height:1.4}
+.when svg{flex:0 0 18px;margin-top:1px;color:var(--mute)}
+.tips-l{list-style:none;margin:6px 0 12px;padding:0}
+.tips-l li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.4}
+.tips-l b{display:block;margin-bottom:2px}
+.tips-l span{color:var(--mute)}
 .hn{margin:4px 0 6px;font-size:17px}
 .hn b{font:700 28px/1 Unbounded,Onest,sans-serif;margin-right:4px}
 .log{list-style:none;margin:0;padding:0}
@@ -319,6 +325,7 @@ h3{font:700 20px/1.2 Onest,sans-serif;margin:0}
         <div class="hero-fig"><div id="hFig" class="fb" role="img" aria-label="Анимация на упражнение"></div></div>
       </section>
       <section id="plan" class="plan"></section>
+      <section id="tips" class="tips" hidden></section>
       <section id="hist" class="hist"></section>
       <section class="sets">
         <h3>Звук</h3>
@@ -2153,6 +2160,21 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
   const REST = { type: 'rest', title: 'Почивка', sub: 'Ден за възстановяване', note: 'По желание: 20–30 минути спокойна разходка.' };
   const SUNDAY = { type: 'rest', title: 'Пълна почивка', sub: 'Неделя е за пълна почивка' };
   const gentleWeek = (a, b) => ({ 1: a, 2: REST, 3: b, 4: REST, 5: a, 6: REST, 0: SUNDAY });
+  /* advice for the gentle programs: when to train, safety, and the habits around it */
+  const WHEN = 'Поне 2 часа след хранене и най-късно 1 час преди лягане.';
+  const TIPS = place => [
+    ['Кога', WHEN],
+    ['Преди да започнеш', 'Ако имаш високо кръвно, проблеми със сърцето или болки в ставите, първо питай личния лекар.'],
+    ['Спри веднага', 'При болка или стягане в гърдите, световъртеж, силен задух или неравен пулс спри и потърси лекар.'],
+    ['Дишане', 'Не задържай дъха. Издишвай при усилието, вдишвай при връщането.'],
+    ['Темпо', 'Движи се бавно и с контрол. Трябва да можеш да говориш, докато тренираш.'],
+    ['Болка', 'Леко парене в мускулите е нормално. При остра болка в става спри това упражнение.'],
+    ['Място', place],
+    ['Вода', 'Пий по няколко глътки вода преди и след тренировката.'],
+    ['Пропуснат ден', 'Няма страшно. Продължи със следващата тренировка, без да наваксваш.'],
+    ['Храна и сън', 'Повече зеленчуци и белтъчини, по-малко захар и тестени храни. Спи по 7–8 часа.'],
+    ['Стане ли лесно', 'Кажи на Михаил и той ще засили програмата.'],
+  ];
 
   const MAMA = gentleWeek(
     { type: 'fullA', title: 'Цяло тяло А', sub: 'Леко, за цялото тяло', mins: 25, blocks: [WARM,
@@ -2198,8 +2220,10 @@ window.HUMAN.bin = "pmpdOcxqVznRarg5sGq+OVJqVzmAalo5imrAOVtqxzmvagI5jGr4OGVq6Tir
     /* programs; fig = figure in the animations ('m' man, 'f' woman), rest = seconds between sets */
     PROFILES: [
       { id: 'mihail', name: 'Михаил', desc: 'Push · Pull · Крака, 5 дни седмично', fig: 'm', rest: 45, week: MIHAIL },
-      { id: 'mama', name: 'Мама', desc: 'Цяло тяло, 3 дни седмично · щадящо', fig: 'f', rest: 75, week: MAMA },
-      { id: 'tatko', name: 'Татко', desc: 'Цяло тяло, 3 дни седмично · без пода', fig: 'm', rest: 90, week: TATKO },
+      { id: 'mama', name: 'Мама', desc: 'Цяло тяло, 3 дни седмично · щадящо', fig: 'f', rest: 75, week: MAMA, when: WHEN,
+        tips: TIPS('Стабилен стол без колелца, опрян в стената, и постелка за упражненията на пода. Тренирай със спортни обувки.') },
+      { id: 'tatko', name: 'Татко', desc: 'Цяло тяло, 3 дни седмично · без пода', fig: 'm', rest: 90, week: TATKO, when: WHEN,
+        tips: TIPS('Стабилен стол без колелца, опрян в стената. Тренирай със спортни обувки.') },
     ],
     DAYS: ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'],
     DSHORT: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
@@ -2226,6 +2250,7 @@ const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: redu
 const ICON = {
   check: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   ext: '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M9 5h10v10M19 5L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 };
 
 /* ---------- storage ---------- */
@@ -2533,7 +2558,8 @@ function renderPlan() {
     return;
   }
   const W = buildSteps(day, p.rest).filter(s => s.k === 'work').length;
-  let h = '<div class="plan-h"><h3>Упражнения</h3><span>' + W + ' серии</span></div><p class="hint">Натисни упражнение, за да видиш как се прави.</p>';
+  let h = (p.when ? '<p class="when">' + ICON.clock + '<span><b>Кога:</b> ' + esc(p.when.charAt(0).toLowerCase() + p.when.slice(1)) + '</span></p>' : '') +
+    '<div class="plan-h"><h3>Упражнения</h3><span>' + W + ' серии</span></div><p class="hint">Натисни упражнение, за да видиш как се прави.</p>';
   day.blocks.forEach((b, bi) => {
     h += '<div class="blk"><div class="blk-h"><h4>' + esc(b.name) + '</h4>' + (b.video ? '<a class="vid2" href="' + esc(b.video) + '" target="_blank" rel="noopener">Видео ' + ICON.ext + '</a>' : '') + '</div>';
     const sub = b.circuit ? 'Кръгова: ' + b.circuit.rounds + (b.circuit.rounds === 1 ? ' кръг' : ' кръга') + (b.circuit.rounds > 1 ? ', ' + restLabel(b.circuit.rest) + ' почивка след всеки кръг. ' : '. ') + (b.note || '') : (b.note || '');
@@ -2564,6 +2590,15 @@ function renderHist() {
       : '<p class="empty">Тук ще се появяват завършените тренировки.</p>') +
     '<p class="sync">' + (ME ? 'Историята се пази в профила ти и се вижда от всяко устройство' + (ME.admin ? '. В „Цялата история“ виждаш и мама и татко.' : '.') : H.mode === 'cloud' ? 'Историята се пази в профила ти в Claude и се вижда от всяко устройство.' : 'Историята се пази на това устройство.') + '</p>';
 }
+let tipsAll = false;
+function renderTips() {
+  const p = prof(), box = $('#tips');
+  box.hidden = !p.tips;
+  if (!p.tips) { box.innerHTML = ''; return; }
+  const list = tipsAll ? p.tips : p.tips.slice(0, 3);
+  box.innerHTML = '<h3>Съвети</h3><ul class="tips-l">' + list.map(([t, s]) => '<li><b>' + esc(t) + '</b><span>' + esc(s) + '</span></li>').join('') + '</ul>' +
+    (p.tips.length > 3 ? '<button type="button" class="pill" id="tipsMore" aria-expanded="' + tipsAll + '">' + (tipsAll ? 'Скрий' : 'Още ' + (p.tips.length - 3) + ' съвета') + '</button>' : '');
+}
 function renderResume() {
   const sr = LS.get('wk.run', null), box = $('#resume');
   const p = sr && PROFILES.find(x => x.id === sr.pid) && (!ME || ME.admin || sr.pid === ME.id) ? PROFILES.find(x => x.id === sr.pid) : null, day = p && p.week[sr.dow];
@@ -2581,7 +2616,7 @@ function renderSound() {
 function renderHome() {
   const p = prof(), day = p.week[state.dow];
   $('#whoName').textContent = p.name;
-  renderWeek(); renderResume(); renderHero(); renderPlan(); renderHist(); renderSound(); renderFoot(p);
+  renderWeek(); renderResume(); renderHero(); renderPlan(); renderTips(); renderHist(); renderSound(); renderFoot(p);
   const go = $('#start');
   go.hidden = day.type === 'rest';
   go.parentElement.hidden = day.type === 'rest';
@@ -2740,6 +2775,7 @@ $('#plan').addEventListener('click', e => {
   state.open = state.open === r.dataset.k ? null : r.dataset.k;
   renderPlan();
 });
+$('#tips').addEventListener('click', e => { if (e.target.closest('#tipsMore')) { tipsAll = !tipsAll; renderTips(); } });
 $('#resume').addEventListener('click', e => {
   const sr = LS.get('wk.run', null);
   if (e.target.closest('#rsGo') && sr) startRun(sr.pid, sr.dow, sr.idx, sr.startedAt);
