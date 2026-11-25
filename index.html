@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#d7391f">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131312" media="(prefers-color-scheme: dark)">
 <title>Тренировки</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
@@ -2946,9 +2947,19 @@ $('#inst').addEventListener('click', async e => {
 if (PWA && 'serviceWorker' in navigator) {
   try {
     const had = !!navigator.serviceWorker.controller;
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-    /* a new version took over: reload when no workout is running */
-    navigator.serviceWorker.addEventListener('controllerchange', () => { if (had && !state.run) location.reload(); });
+    let reg = null, checked = Date.now(), pending = false;
+    navigator.serviceWorker.register('sw.js').then(r => { reg = r; }).catch(() => {});
+    /* a new version took over: reload now, or once the workout is over */
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!had) return;
+      if (state.run) pending = true; else location.reload();
+    });
+    /* phones usually resume the app instead of restarting it, so look for a new version when it comes back */
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible' || state.run) return;
+      if (pending) { location.reload(); return; }
+      if (reg && Date.now() - checked > 30 * 60000) { checked = Date.now(); reg.update().catch(() => {}); }
+    });
   } catch (e) { /* no worker */ }
 }
 

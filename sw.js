@@ -1,8 +1,9 @@
 /* Тренировки: offline cache. The version changes with every build, so a new build replaces the old files. */
-const V = 'trenirovki-e325d66524';
+const V = 'trenirovki-075f557167';
 const FILES = ["./", "index.html", "three.min.js", "firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"];
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
+  /* cache: 'reload' skips the browser's HTTP cache, so a new version never stores an older file */
+  e.waitUntil(caches.open(V).then(c => c.addAll(FILES.map(f => new Request(f, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
