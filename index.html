@@ -2932,7 +2932,7 @@ function renderInstall() {
   }
   box.hidden = !LINK;
   if (LINK) box.innerHTML = '<h3>Приложение</h3><a class="pill dark" href="' + esc(LINK) + '" target="_blank" rel="noopener">Инсталирай като приложение</a>' +
-    '<p>Отваря се в браузъра. Там натисни „Инсталирай“ и влез с името и паролата си. Там историята се пази отделно от тази в Claude.</p>';
+    '<p>Отваря се в браузъра. Там натисни „Инсталирай“ и влез с имейла и паролата си. Историята в приложението се пази отделно от тази тук.</p>';
 }
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); BIP = e; renderInstall(); });
 window.addEventListener('appinstalled', () => { BIP = null; renderInstall(); });
