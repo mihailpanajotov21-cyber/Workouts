@@ -1,5 +1,5 @@
 /* Тренировки: offline cache. The version changes with every build, so a new build replaces the old files. */
-const V = 'trenirovki-642ef9f350';
+const V = 'trenirovki-fd869617cb';
 const FILES = ["./", "index.html", "three.min.js", "firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
