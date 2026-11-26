@@ -2564,9 +2564,11 @@ let heroTimer = null, heroList = [], heroIdx = 0, heroKg = {};
 function renderWeek() {
   const p = prof(), done = doneThisWeek(p), td = today();
   $('#week').innerHTML = ORDER.map(d => {
-    const dd = p.week[d], t = TYPES[dd.type], on = d === state.dow, ok = done.has(d);
+    /* a rest day is ticked as soon as it comes: there is nothing to finish */
+    const dd = p.week[d], t = TYPES[dd.type], on = d === state.dow, rest = dd.type === 'rest';
+    const ok = rest ? ORDER.indexOf(d) <= ORDER.indexOf(td) : done.has(d);
     return '<button type="button" class="day ' + t.c + (on ? ' on' : '') + (d === td ? ' td' : '') + (ok ? ' done' : '') + '" data-d="' + d + '" aria-pressed="' + on + '" aria-label="' +
-      esc(DAYS[d] + ': ' + dd.title + (ok ? ', направена' : '')) + '"><span class="dn">' + DSHORT[d] + '</span><span class="pl">' + (ok ? ICON.check : '') + '</span><span class="dl">' + esc(t.short) + '</span></button>';
+      esc(DAYS[d] + ': ' + dd.title + (ok ? (rest ? ', отметната' : ', направена') : '')) + '"><span class="dn">' + DSHORT[d] + '</span><span class="pl">' + (ok ? ICON.check : '') + '</span><span class="dl">' + esc(t.short) + '</span></button>';
   }).join('');
 }
 function heroShow() {
